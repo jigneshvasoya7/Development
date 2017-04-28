@@ -14,3 +14,21 @@ C:\Program Files\opencv\build\x86\vc10\bin>opencv_traincascade.exe -data "D:\LPR
 R Training\Negative\bg.txt" -numPos 40 numNeg 50 -numStages 8 -precalValBufSize
 512 -precalIdxBufSize 256 -featureType HAAR -minHitRate 0.995 -maxFalseAlarmRate
  0.2 -w 80 -h 30
+
+==== 0) Change path as below ======
+
+> cd C:\Program Files\opencv\build\x64\vc10\bin
+
+==== 1) Create Positive Sample Images and info.txt file ======
+
+> opencv_createsamples.exe -img C:\Users\jvasoya\Desktop\NPTrainingSet\Positive\NP1Gray.jpg -bg C:\Users\jvasoya\Desktop\NPTrainingSet\Negative\bg.txt -info C:\Users\jvasoya\Desktop\NPTrainingSet\Info\info.txt -num 1000 -maxxangle 0.0 -maxyangle 0.0 -maxzangle 0.3 -bgcolor 0 -bgthresh 0 -w 80 -h 30
+
+[Note: change bgcolor & bgthresh to make sample transparent for intensity range (bgcolor-bgthresh)  to (bgcolor+bgthresh)]
+
+==== 2) Create .vec file =======
+
+> opencv_createsamples -info C:\Users\jvasoya\Desktop\NPTrainingSet\Info\info.txt -num 1000 -w 80 -h 30 -vec C:\Users\jvasoya\Desktop\NPTrainingSet\Vec\positives.vec
+
+==== 3) Train Haar classifier and Create cascade .xml file ====
+
+> opencv_traincascade -data C:\Users\jvasoya\Desktop\NPTrainingSet\Model -vec C:\Users\jvasoya\Desktop\NPTrainingSet\Vec\positives.vec -bg C:\Users\jvasoya\Desktop\NPTrainingSet\Negative\bg.txt -numPos 900 -numNeg 450 -numStages 10 -w 80 -h 30
